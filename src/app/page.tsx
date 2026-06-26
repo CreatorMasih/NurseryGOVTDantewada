@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import React from "react";
 import Image from "next/image";
@@ -49,7 +49,7 @@ export default function LandingPage() {
           className="flex items-center px-4 py-2 rounded-full border border-primary/20 bg-white hover:bg-primary hover:text-white text-primary text-sm font-medium transition-all duration-300 shadow-sm"
         >
           <Globe className="w-4 h-4 mr-2" />
-          <span>{language === "en" ? "à¤¹à¤¿à¤‚à¤¦à¥€" : "English"}</span>
+          <span>{language === "en" ? t("hindi") : t("english")}</span>
         </button>
       </header>
 
@@ -74,15 +74,15 @@ export default function LandingPage() {
               </>
             ) : (
               <>
-                à¤¦à¤‚à¤¤à¥‡à¤µà¤¾à¤¡à¤¼à¤¾ à¤œà¤¿à¤²à¤¾ <br />
-                <span className="text-secondary font-bold">à¤µà¥ƒà¤•à¥à¤·à¤¾à¤°à¥‹à¤ªà¤£ à¤¨à¤¿à¤—à¤°à¤¾à¤¨à¥€ à¤ªà¥à¤°à¤£à¤¾à¤²à¥€</span>
+                दंतेवाड़ा जिला <br />
+                <span className="text-secondary font-bold">वृक्षारोपण निगरानी प्रणाली</span>
               </>
             )}
           </h2>
           <p className="text-base text-muted-foreground sm:text-lg max-w-2xl mx-auto">
             {language === "en" 
               ? "Official digital portal of the Forest Department, Dantewada. Manage nursery stocks, record plant distributions, and review analytics for a greener tomorrow." 
-              : "à¤µà¤¨ à¤µà¤¿à¤­à¤¾à¤—, à¤¦à¤‚à¤¤à¥‡à¤µà¤¾à¤¡à¤¼à¤¾ à¤•à¤¾ à¤†à¤§à¤¿à¤•à¤¾à¤°à¤¿à¤• à¤¡à¤¿à¤œà¤¿à¤Ÿà¤² à¤ªà¥‹à¤°à¥à¤Ÿà¤²à¥¤ à¤¨à¤°à¥à¤¸à¤°à¥€ à¤¸à¥à¤Ÿà¥‰à¤• à¤ªà¥à¤°à¤¬à¤‚à¤§à¤¿à¤¤ à¤•à¤°à¥‡à¤‚, à¤µà¥ƒà¤•à¥à¤· à¤µà¤¿à¤¤à¤°à¤£ à¤¦à¤°à¥à¤œ à¤•à¤°à¥‡à¤‚, à¤”à¤° à¤¹à¤°à¤¿à¤¯à¤¾à¤²à¥€ à¤¸à¥‡ à¤­à¤°à¥‡ à¤•à¤² à¤•à¥‡ à¤²à¤¿à¤ à¤µà¤¿à¤¶à¥à¤²à¥‡à¤·à¤£ à¤•à¥€ à¤¸à¤®à¥€à¤•à¥à¤·à¤¾ à¤•à¤°à¥‡à¤‚à¥¤"}
+              : "वन विभाग, दंतेवाड़ा का आधिकारिक डिजिटल पोर्टल। नर्सरी स्टॉक प्रबंधित करें, वृक्ष वितरण दर्ज करें, और हरियाली से भरे कल के लिए विश्लेषण की समीक्षा करें।"}
           </p>
         </div>
 
@@ -92,7 +92,7 @@ export default function LandingPage() {
             href="/dashboard"
             className="flex items-center justify-center w-full sm:w-auto px-8 py-4 rounded-xl bg-primary hover:bg-primary-hover text-white font-semibold transition-all duration-300 shadow-md shadow-primary/20 group hover:translate-y-[-2px]"
           >
-            <span>{language === "en" ? "Enter System" : "à¤¸à¤¿à¤¸à¥à¤Ÿà¤® à¤®à¥‡à¤‚ à¤ªà¥à¤°à¤µà¥‡à¤¶ à¤•à¤°à¥‡à¤‚"}</span>
+            <span>{language === "en" ? "Enter System" : "सिस्टम में प्रवेश करें"}</span>
             <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
           </Link>
         </div>
@@ -101,7 +101,7 @@ export default function LandingPage() {
       {/* Footer */}
       <footer className="w-full py-6 text-center border-t border-primary/10 bg-white/30 backdrop-blur-sm z-10">
         <p className="text-xs text-muted-foreground">
-          Â© 2026 {t("subtitle")}. All Rights Reserved.
+          © 2026 {t("subtitle")}. All Rights Reserved.
         </p>
       </footer>
     </div>

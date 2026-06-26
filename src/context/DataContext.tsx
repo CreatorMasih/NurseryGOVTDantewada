@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { FullDatabase } from "@/types";
@@ -164,16 +164,16 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
         action: "addDistribution",
         data: {
           nursery: record.nursery,
-          date: record["à¤µà¤¿à¤¤à¤°à¤£ à¤¦à¤¿à¤¨à¤¾à¤‚à¤•"],
-          beneficiaryName: record["à¤²à¤¾à¤­à¤¾à¤°à¥à¤¥à¥€ à¤•à¤¾ à¤¨à¤¾à¤®"],
-          mobileNumber: record["à¤®à¥‹à¤¬à¤¾à¤‡à¤² à¤¨à¤‚à¤¬à¤°"],
-          janpad: record["à¤œà¤¨à¤ªà¤¦ à¤ªà¤‚à¤šà¤¾à¤¯à¤¤"],
-          gramPanchayat: record["à¤—à¥à¤°à¤¾à¤® à¤ªà¤‚à¤šà¤¾à¤¯à¤¤"],
-          village: record["à¤—à¥à¤°à¤¾à¤® à¤•à¤¾ à¤¨à¤¾à¤®"],
-          quantity: Number(record["à¤ªà¥Œà¤§à¥‹à¤‚ à¤•à¥€ à¤¸à¤‚à¤–à¥à¤¯à¤¾"]),
-          plantType: record["à¤ªà¥Œà¤§à¥‹à¤‚ à¤•à¤¾ à¤ªà¥à¤°à¤•à¤¾à¤°"],
-          category: record["à¤ªà¥à¤°à¤¾à¤ªà¥à¤¤à¤•à¤°à¥à¤¤à¤¾ à¤¶à¥à¤°à¥‡à¤£à¥€"],
-          distributorName: record["à¤µà¤¿à¤¤à¤°à¤£à¤•à¤°à¥à¤¤à¤¾ à¤•à¤¾ à¤¨à¤¾à¤®"],
+          date: record["वितरण दिनांक"],
+          beneficiaryName: record["लाभार्थी का नाम"],
+          mobileNumber: record["मोबाइल नंबर"],
+          janpad: record["जनपद पंचायत"],
+          gramPanchayat: record["ग्राम पंचायत"],
+          village: record["ग्राम का नाम"],
+          quantity: Number(record["पौधों की संख्या"]),
+          plantType: record["पौधों का प्रकार"],
+          category: record["प्राप्तकर्ता श्रेणी"],
+          distributorName: record["वितरणकर्ता का नाम"],
         },
       };
 
