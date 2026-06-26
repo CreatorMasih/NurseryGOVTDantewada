@@ -31,15 +31,57 @@ interface DataContextProps {
 
 const DataContext = createContext<DataContextProps | undefined>(undefined);
 
-const formatDatabase = (fetchedData: Partial<FullDatabase>): FullDatabase => ({
-  nurseryMaster: fetchedData.nurseryMaster || [],
-  plantTypes: fetchedData.plantTypes || [],
-  janpadMaster: fetchedData.janpadMaster || [],
-  gramPanchayatMaster: fetchedData.gramPanchayatMaster || [],
-  villageMaster: fetchedData.villageMaster || [],
-  beneficiaryCategory: fetchedData.beneficiaryCategory || [],
-  distributions: fetchedData.distributions || {},
-});
+const formatDatabase = (fetchedData: any): FullDatabase => {
+  const nurseryMaster = (fetchedData.nurseryMaster || []).map((n: any) => ({
+    id: n.id || "",
+    name: n.name || "",
+    inchargeName: n.inchargeName || n.inchargename || "",
+    contactNumber: String(n.contactNumber || n.contactnumber || ""),
+    openingStock: n.openingStock !== undefined ? n.openingStock : n.openingstock,
+  }));
+
+  const plantTypes = (fetchedData.plantTypes || []).map((p: any) => ({
+    id: p.id || "",
+    nameEn: p.nameEn || p.nameen || "",
+    nameHi: p.nameHi || p.namehi || "",
+  }));
+
+  const janpadMaster = (fetchedData.janpadMaster || []).map((j: any) => ({
+    id: j.id || "",
+    nameEn: j.nameEn || j.nameen || "",
+    nameHi: j.nameHi || j.namehi || "",
+  }));
+
+  const gramPanchayatMaster = (fetchedData.gramPanchayatMaster || []).map((gp: any) => ({
+    id: gp.id || "",
+    janpadId: gp.janpadId || gp.janpadid || gp.janpad_id || "",
+    nameEn: gp.nameEn || gp.nameen || "",
+    nameHi: gp.nameHi || gp.namehi || "",
+  }));
+
+  const villageMaster = (fetchedData.villageMaster || []).map((v: any) => ({
+    id: v.id || "",
+    gpId: v.gpId || v.gpid || v.gp_id || "",
+    nameEn: v.nameEn || v.nameen || "",
+    nameHi: v.nameHi || v.namehi || "",
+  }));
+
+  const beneficiaryCategory = (fetchedData.beneficiaryCategory || []).map((c: any) => ({
+    id: c.id || "",
+    nameEn: c.nameEn || c.nameen || "",
+    nameHi: c.nameHi || c.namehi || "",
+  }));
+
+  return {
+    nurseryMaster,
+    plantTypes,
+    janpadMaster,
+    gramPanchayatMaster,
+    villageMaster,
+    beneficiaryCategory,
+    distributions: fetchedData.distributions || {},
+  };
+};
 
 const getConfiguredScriptUrl = () => {
   if (typeof window === "undefined") return DEFAULT_SCRIPT_URL;

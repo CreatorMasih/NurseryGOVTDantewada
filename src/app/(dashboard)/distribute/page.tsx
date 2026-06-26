@@ -80,11 +80,7 @@ export default function DistributePage() {
       !date ||
       !beneficiaryName.trim() ||
       !mobileNumber.trim() ||
-      !janpad ||
-      !gramPanchayat ||
-      !village ||
       !quantity ||
-      !plantType ||
       !category ||
       !distributorName.trim()
     ) {
@@ -251,10 +247,9 @@ export default function DistributePage() {
             {/* Janpad Cascade */}
             <div className="space-y-1.5">
               <label className="text-xs font-bold text-muted-foreground uppercase tracking-wide">
-                {t("selectJanpad")} <span className="text-red-500">*</span>
+                {t("selectJanpad")}
               </label>
               <select
-                required
                 value={janpad}
                 onChange={(e) => setJanpad(e.target.value)}
                 className="w-full px-3 py-2.5 rounded-lg border border-input bg-white focus:ring-1 focus:ring-primary text-sm font-medium"
@@ -270,10 +265,9 @@ export default function DistributePage() {
             {/* GP Cascade */}
             <div className="space-y-1.5">
               <label className="text-xs font-bold text-muted-foreground uppercase tracking-wide">
-                {t("selectGp")} <span className="text-red-500">*</span>
+                {t("selectGp")}
               </label>
               <select
-                required
                 disabled={!janpad}
                 value={gramPanchayat}
                 onChange={(e) => setGramPanchayat(e.target.value)}
@@ -290,10 +284,9 @@ export default function DistributePage() {
             {/* Village Cascade */}
             <div className="space-y-1.5">
               <label className="text-xs font-bold text-muted-foreground uppercase tracking-wide">
-                {t("selectVillage")} <span className="text-red-500">*</span>
+                {t("selectVillage")}
               </label>
               <select
-                required
                 disabled={!gramPanchayat}
                 value={village}
                 onChange={(e) => setVillage(e.target.value)}
@@ -326,10 +319,9 @@ export default function DistributePage() {
             {/* Plant Type Selection */}
             <div className="space-y-1.5">
               <label className="text-xs font-bold text-muted-foreground uppercase tracking-wide">
-                {t("plantType")} <span className="text-red-500">*</span>
+                {t("plantType")}
               </label>
               <select
-                required
                 value={plantType}
                 onChange={(e) => setPlantType(e.target.value)}
                 className="w-full px-3 py-2.5 rounded-lg border border-input bg-white focus:ring-1 focus:ring-primary text-sm font-medium"
