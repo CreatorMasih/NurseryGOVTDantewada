@@ -26,15 +26,21 @@ import {
   Home, 
   Calendar, 
   Award,
-  ArrowUpRight
+  ArrowUpRight,
+  ShieldAlert
 } from "lucide-react";
 
 // Standard curated color palette for charts
 const COLORS = ["#1B5E20", "#2E7D32", "#C9A227", "#E65100", "#006064", "#311B92", "#004D40"];
 
 export default function Dashboard() {
-  const { data, isLoading } = useData();
+  const { data, isLoading, error } = useData();
   const { t, language } = useLanguage();
+  const [mounted, setMounted] = React.useState(false);
+
+  React.useEffect(() => {
+    setMounted(true);
+  }, []);
 
   // Current date (fixed from metadata context: 2026-06-26)
   const TODAY_STR = "2026-06-26";
@@ -96,7 +102,14 @@ export default function Dashboard() {
       });
     });
 
-    const remainingStock = Math.max(0, totalStock - totalDistributed);
+    // Calculate total remaining stock by summing remaining stocks of individual nurseries (capped at 0)
+    let remainingStock = 0;
+    data.nurseryMaster.forEach(n => {
+      const records = data.distributions[n.name] || [];
+      const dist = records.reduce((sum, r) => sum + (Number(r["पौधों की संख्या"]) || 0), 0);
+      remainingStock += Math.max(0, (Number(n.openingStock) || 0) - dist);
+    });
+
     const distRate = totalStock > 0 ? (totalDistributed / totalStock) * 100 : 0;
 
     // Find top nursery
@@ -237,7 +250,7 @@ export default function Dashboard() {
     return Object.entries(catMap).map(([name, value]) => ({ name, value }));
   }, [data, language]);
 
-  if (isLoading) {
+  if (isLoading || !mounted) {
     return (
       <div className="flex flex-col items-center justify-center min-h-[50vh] space-y-3">
         <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
@@ -266,6 +279,20 @@ export default function Dashboard() {
         <h2 className="text-xl md:text-2xl font-bold text-primary">{t("dashboard")}</h2>
         <p className="text-xs text-muted-foreground mt-0.5">Real-time statistics loaded dynamically from Google Sheets.</p>
       </div>
+
+      {/* Connection Error Banner */}
+      {error && (
+        <div className="bg-red-50 border border-red-200 rounded-xl p-4 flex items-start space-x-3 text-red-800 text-sm font-medium shadow-sm">
+          <ShieldAlert className="w-5 h-5 text-red-600 shrink-0 mt-0.5" />
+          <div className="space-y-1">
+            <h4 className="font-bold uppercase tracking-wider text-xs text-red-950">Database Connection Failed</h4>
+            <p className="opacity-90">{error}</p>
+            <p className="text-xs opacity-75 mt-1 font-semibold">
+              The system is displaying offline cached data. Please verify your Google Apps Script URL in the System Settings.
+            </p>
+          </div>
+        </div>
+      )}
 
       {/* Stats Cards Grid */}
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">

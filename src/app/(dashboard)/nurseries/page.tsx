@@ -6,7 +6,7 @@ import { useLanguage } from "@/context/LanguageContext";
 import { Phone, Users, ShieldAlert, CheckCircle2, ChevronRight, Home, TreePine } from "lucide-react";
 
 export default function NurseriesPage() {
-  const { data, isLoading } = useData();
+  const { data, isLoading, error } = useData();
   const { t, language } = useLanguage();
 
   const nurseriesData = useMemo(() => {
@@ -48,6 +48,20 @@ export default function NurseriesPage() {
         <h2 className="text-xl md:text-2xl font-bold text-primary">{t("nurseries")}</h2>
         <p className="text-xs text-muted-foreground mt-0.5">{t("nurseryMasterList")}</p>
       </div>
+
+      {/* Connection Error Banner */}
+      {error && (
+        <div className="bg-red-50 border border-red-200 rounded-xl p-4 flex items-start space-x-3 text-red-800 text-sm font-medium shadow-sm">
+          <ShieldAlert className="w-5 h-5 text-red-600 shrink-0 mt-0.5" />
+          <div className="space-y-1">
+            <h4 className="font-bold uppercase tracking-wider text-xs text-red-950">Database Connection Failed</h4>
+            <p className="opacity-90">{error}</p>
+            <p className="text-xs opacity-75 mt-1 font-semibold">
+              The system is displaying offline cached data. Please verify your Google Apps Script URL in the System Settings.
+            </p>
+          </div>
+        </div>
+      )}
 
       {/* Aggregate Overview Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">

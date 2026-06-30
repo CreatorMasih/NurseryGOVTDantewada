@@ -3,10 +3,10 @@
 import React, { useState, useMemo } from "react";
 import { useData } from "@/context/DataContext";
 import { useLanguage } from "@/context/LanguageContext";
-import { Search, Download, ChevronLeft, ChevronRight, Filter, Calendar } from "lucide-react";
+import { Search, Download, ChevronLeft, ChevronRight, Filter, Calendar, ShieldAlert } from "lucide-react";
 
 export default function ReportsPage() {
-  const { data, isLoading } = useData();
+  const { data, isLoading, error } = useData();
   const { t, language } = useLanguage();
 
   // Search & Filter State
@@ -215,6 +215,20 @@ export default function ReportsPage() {
           <span>{t("exportCsv")}</span>
         </button>
       </div>
+
+      {/* Connection Error Banner */}
+      {error && (
+        <div className="bg-red-50 border border-red-200 rounded-xl p-4 flex items-start space-x-3 text-red-800 text-sm font-medium shadow-sm">
+          <ShieldAlert className="w-5 h-5 text-red-600 shrink-0 mt-0.5" />
+          <div className="space-y-1">
+            <h4 className="font-bold uppercase tracking-wider text-xs text-red-950">Database Connection Failed</h4>
+            <p className="opacity-90">{error}</p>
+            <p className="text-xs opacity-75 mt-1 font-semibold">
+              The system is displaying offline cached data. Please verify your Google Apps Script URL in the System Settings.
+            </p>
+          </div>
+        </div>
+      )}
 
       {/* Advanced Filters Panel */}
       <div className="bg-white p-5 rounded-xl border border-border/40 shadow-sm space-y-4">

@@ -3,10 +3,10 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { useData } from "@/context/DataContext";
 import { useLanguage } from "@/context/LanguageContext";
-import { ClipboardCheck, Sparkles, AlertCircle, CheckCircle2, Loader2, ArrowRight } from "lucide-react";
+import { ClipboardCheck, Sparkles, AlertCircle, CheckCircle2, Loader2, ArrowRight, ShieldAlert } from "lucide-react";
 
 export default function DistributePage() {
-  const { data, addDistribution, isLoading: dataLoading } = useData();
+  const { data, addDistribution, isLoading: dataLoading, error } = useData();
   const { t, language } = useLanguage();
 
   const TODAY_STR = "2026-06-26";
@@ -151,6 +151,20 @@ export default function DistributePage() {
         <h2 className="text-xl md:text-2xl font-bold text-primary">{t("distribute")}</h2>
         <p className="text-xs text-muted-foreground mt-0.5">{t("formTitle")}</p>
       </div>
+
+      {/* Connection Error Banner */}
+      {error && (
+        <div className="bg-red-50 border border-red-200 rounded-xl p-4 flex items-start space-x-3 text-red-800 text-sm font-medium shadow-sm">
+          <ShieldAlert className="w-5 h-5 text-red-600 shrink-0 mt-0.5" />
+          <div className="space-y-1">
+            <h4 className="font-bold uppercase tracking-wider text-xs text-red-950">Database Connection Failed</h4>
+            <p className="opacity-90">{error}</p>
+            <p className="text-xs opacity-75 mt-1 font-semibold">
+              The system is displaying offline cached data and submissions will fail. Please verify your Google Apps Script URL in the System Settings.
+            </p>
+          </div>
+        </div>
+      )}
 
       {/* Form Container */}
       <div className="bg-white rounded-xl border border-border/40 shadow-sm overflow-hidden">
