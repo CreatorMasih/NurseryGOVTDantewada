@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState } from "react";
 import { useData } from "@/context/DataContext";
 import { useLanguage } from "@/context/LanguageContext";
 import { ClipboardCheck, Sparkles, AlertCircle, CheckCircle2, Loader2, ArrowRight } from "lucide-react";
@@ -29,46 +29,6 @@ export default function DistributePage() {
   const [successMsg, setSuccessMsg] = useState<string | null>(null);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
-  // Cascading drop-down calculations
-  // Get selected Janpad ID
-  const selectedJanpadId = useMemo(() => {
-    const matched = data.janpadMaster.find(
-      j => j.nameEn === janpad || j.nameHi === janpad
-    );
-    return matched ? matched.id : "";
-  }, [janpad, data.janpadMaster]);
-
-  // Filtered GPs based on selected Janpad
-  const filteredGps = useMemo(() => {
-    if (!selectedJanpadId) return [];
-    return data.gramPanchayatMaster.filter(gp => gp.janpadId === selectedJanpadId);
-  }, [selectedJanpadId, data.gramPanchayatMaster]);
-
-  // Get selected GP ID
-  const selectedGpId = useMemo(() => {
-    const matched = data.gramPanchayatMaster.find(
-      gp => gp.nameEn === gramPanchayat || gp.nameHi === gramPanchayat
-    );
-    return matched ? matched.id : "";
-  }, [gramPanchayat, data.gramPanchayatMaster]);
-
-  // Filtered Villages based on selected GP
-  const filteredVillages = useMemo(() => {
-    if (!selectedGpId) return [];
-    return data.villageMaster.filter(v => v.gpId === selectedGpId);
-  }, [selectedGpId, data.villageMaster]);
-
-  // Reset GP and Village if Janpad changes
-  useEffect(() => {
-    setGramPanchayat("");
-    setVillage("");
-  }, [janpad]);
-
-  // Reset Village if GP changes
-  useEffect(() => {
-    setVillage("");
-  }, [gramPanchayat]);
-
   const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setSuccessMsg(null);
@@ -80,6 +40,8 @@ export default function DistributePage() {
       !date ||
       !beneficiaryName.trim() ||
       !mobileNumber.trim() ||
+      !gramPanchayat ||
+      !village ||
       !quantity ||
       !category ||
       !distributorName.trim()
@@ -262,42 +224,34 @@ export default function DistributePage() {
               </select>
             </div>
 
-            {/* GP Cascade */}
+            {/* Gram Panchayat */}
             <div className="space-y-1.5">
               <label className="text-xs font-bold text-muted-foreground uppercase tracking-wide">
-                {t("selectGp")}
+                {t("selectGp")} <span className="text-red-500">*</span>
               </label>
-              <select
-                disabled={!janpad}
+              <input
+                type="text"
+                required
+                placeholder={language === "en" ? "Enter Gram Panchayat name" : "ग्राम पंचायत का नाम दर्ज करें"}
                 value={gramPanchayat}
                 onChange={(e) => setGramPanchayat(e.target.value)}
-                className="w-full px-3 py-2.5 rounded-lg border border-input bg-white focus:ring-1 focus:ring-primary disabled:bg-muted text-sm font-medium"
-              >
-                <option value="">-- {t("selectGp")} --</option>
-                {filteredGps.map(gp => {
-                  const val = language === "en" ? gp.nameEn : gp.nameHi;
-                  return <option key={gp.id} value={val}>{val}</option>;
-                })}
-              </select>
+                className="w-full px-3 py-2.5 rounded-lg border border-input bg-white focus:ring-1 focus:ring-primary text-sm font-medium"
+              />
             </div>
 
-            {/* Village Cascade */}
+            {/* Village */}
             <div className="space-y-1.5">
               <label className="text-xs font-bold text-muted-foreground uppercase tracking-wide">
-                {t("selectVillage")}
+                {t("selectVillage")} <span className="text-red-500">*</span>
               </label>
-              <select
-                disabled={!gramPanchayat}
+              <input
+                type="text"
+                required
+                placeholder={language === "en" ? "Enter Village name" : "ग्राम का नाम दर्ज करें"}
                 value={village}
                 onChange={(e) => setVillage(e.target.value)}
-                className="w-full px-3 py-2.5 rounded-lg border border-input bg-white focus:ring-1 focus:ring-primary disabled:bg-muted text-sm font-medium"
-              >
-                <option value="">-- {t("selectVillage")} --</option>
-                {filteredVillages.map(v => {
-                  const val = language === "en" ? v.nameEn : v.nameHi;
-                  return <option key={v.id} value={val}>{val}</option>;
-                })}
-              </select>
+                className="w-full px-3 py-2.5 rounded-lg border border-input bg-white focus:ring-1 focus:ring-primary text-sm font-medium"
+              />
             </div>
 
             {/* Plant Quantity */}

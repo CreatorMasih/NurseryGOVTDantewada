@@ -10,9 +10,15 @@
  * 5. Click Deploy > New Deployment.
  * 6. Select Type: Web App.
  * 7. Set "Execute as" to "Me", and "Who has access" to "Anyone".
- * 8. Click Deploy, authorize permissions, and copy the Web App URL.
+ * 8. Click Deploy, authorize permissions, and copy the Web App URL ending in /exec.
  * 9. Paste this Web App URL in the Settings page of the DDPMS frontend application.
  */
+
+const VALID_PAGES = {
+  dashboard: "Index",
+  index: "Index",
+  home: "Index"
+};
 
 // Headers for nursery distribution sheets
 const HEADERS = [
@@ -29,10 +35,47 @@ const HEADERS = [
   "वितरणकर्ता का नाम"
 ];
 
-/**
- * Handle GET requests - Fetches all master data and distribution records.
- */
 function doGet(e) {
+  const params = (e && e.parameter) ? e.parameter : {};
+
+  if (isApiRequest(params)) {
+    return getDatabaseResponse();
+  }
+
+  return renderPage(params.page || "dashboard");
+}
+
+/**
+ * Render the web-app shell for browser requests.
+ */
+function renderPage(pageName) {
+  const normalizedPage = String(pageName || "dashboard").toLowerCase();
+  const templateName = VALID_PAGES[normalizedPage];
+
+  if (!templateName) {
+    return HtmlService.createHtmlOutput("Route not found: " + normalizedPage)
+      .setTitle("DDPMS")
+      .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
+  }
+
+  return HtmlService.createTemplateFromFile(templateName)
+    .evaluate()
+    .setTitle("DDPMS Dashboard")
+    .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
+}
+
+/**
+ * The Next frontend calls the web app as a JSON API using ?api=data.
+ * Older deployed frontends also added only ?t=timestamp, so keep that path working.
+ */
+function isApiRequest(params) {
+  return params.api === "data" || params.format === "json" || params.t !== undefined;
+}
+
+/**
+ * Fetches all master data and distribution records.
+ */
+function getDatabaseResponse() {
   try {
     const ss = SpreadsheetApp.getActiveSpreadsheet();
     const result = {
