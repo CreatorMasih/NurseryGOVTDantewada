@@ -81,7 +81,7 @@ export default function LandingPage() {
           </h2>
           <p className="text-base text-muted-foreground sm:text-lg max-w-2xl mx-auto">
             {language === "en" 
-              ? "Official digital portal of the Forest Department, Dantewada. Manage nursery stocks, record plant distributions, and review analytics for a greener tomorrow." 
+              ? "Official digital portal of the District Administration, Dantewada. Monitor nursery stocks, record plant distributions, and review plantation progress across the district." 
               : "वन विभाग, दंतेवाड़ा का आधिकारिक डिजिटल पोर्टल। नर्सरी स्टॉक प्रबंधित करें, वृक्ष वितरण दर्ज करें, और हरियाली से भरे कल के लिए विश्लेषण की समीक्षा करें।"}
           </p>
         </div>
