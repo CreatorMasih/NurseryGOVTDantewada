@@ -44,14 +44,14 @@ export default function ReportsPage() {
   const processedRecords = useMemo(() => {
     let list = [...flattenedDistributions];
 
-    // 1. Text Search
+    // 1. Text Search (safe casting to string for all fields to support numbers from Google Sheets)
     if (searchTerm.trim()) {
       const s = searchTerm.toLowerCase().trim();
       list = list.filter(r => 
-        (r["लाभार्थी का नाम"] && r["लाभार्थी का नाम"].toLowerCase().includes(s)) ||
-        (r["मोबाइल नंबर"] && r["मोबाइल नंबर"].includes(s)) ||
-        (r["ग्राम का नाम"] && r["ग्राम का नाम"].toLowerCase().includes(s)) ||
-        (r["वितरणकर्ता का नाम"] && r["वितरणकर्ता का नाम"].toLowerCase().includes(s))
+        (r["लाभार्थी का नाम"] && String(r["लाभार्थी का नाम"]).toLowerCase().includes(s)) ||
+        (r["मोबाइल नंबर"] && String(r["मोबाइल नंबर"]).includes(s)) ||
+        (r["ग्राम का नाम"] && String(r["ग्राम का नाम"]).toLowerCase().includes(s)) ||
+        (r["वितरणकर्ता का नाम"] && String(r["वितरणकर्ता का नाम"]).toLowerCase().includes(s))
       );
     }
 

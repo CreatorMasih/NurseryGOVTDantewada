@@ -93,11 +93,11 @@ export default function Dashboard() {
           }
         }
 
-        // Unique beneficiaries
-        const name = r["लाभार्थी का नाम"] || "";
-        const mobile = r["मोबाइल नंबर"] || "";
+        // Unique beneficiaries (convert values to strings explicitly to support numeric values from Google Sheets)
+        const name = String(r["लाभार्थी का नाम"] || "").trim();
+        const mobile = String(r["मोबाइल नंबर"] || "").trim();
         if (name) {
-          uniqueBeneficiaries.add(`${name.trim()}_${mobile.trim()}`);
+          uniqueBeneficiaries.add(`${name}_${mobile}`);
         }
       });
     });
