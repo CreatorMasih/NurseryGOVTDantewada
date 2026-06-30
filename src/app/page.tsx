@@ -81,8 +81,8 @@ export default function LandingPage() {
           </h2>
           <p className="text-base text-muted-foreground sm:text-lg max-w-2xl mx-auto">
             {language === "en" 
-              ? "Official digital portal of the Forest Department, Dantewada. Manage nursery stocks, record plant distributions, and review analytics for a greener tomorrow." 
-              : "वन विभाग, दंतेवाड़ा का आधिकारिक डिजिटल पोर्टल। नर्सरी स्टॉक प्रबंधित करें, वृक्ष वितरण दर्ज करें, और हरियाली से भरे कल के लिए विश्लेषण की समीक्षा करें।"}
+              ? "Official digital portal of the District Administration, Dantewada. Monitor nursery stocks, record plant distributions, and review plantation progress across the district." 
+              : "जिला प्रशासन, दंतेवाड़ा का आधिकारिक डिजिटल पोर्टल। नर्सरी स्टॉक का प्रबंधन, पौधों के वितरण का अभिलेखीकरण एवं जिले में संचालित वृक्षारोपण अभियान की प्रगति की प्रभावी निगरानी हेतु।"}
           </p>
         </div>
 

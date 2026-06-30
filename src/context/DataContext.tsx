@@ -88,6 +88,11 @@ const getConfiguredScriptUrl = () => {
   return localStorage.getItem("ddpms_script_url") || DEFAULT_SCRIPT_URL;
 };
 
+const buildApiUrl = (baseUrl: string) => {
+  const separator = baseUrl.includes("?") ? "&" : "?";
+  return `${baseUrl}${separator}api=data&t=${Date.now()}`;
+};
+
 export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [data, setData] = useState<FullDatabase>(EMPTY_DATABASE);
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -111,7 +116,7 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setError(null);
 
     try {
-      const response = await fetch(`${currentUrl}?t=${Date.now()}`);
+      const response = await fetch(buildApiUrl(currentUrl));
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
@@ -169,7 +174,7 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setError(null);
 
     try {
-      const response = await fetch(`${cleanUrl}?t=${Date.now()}`);
+      const response = await fetch(buildApiUrl(cleanUrl));
       if (!response.ok) throw new Error("Connection failed");
 
       const fetchedData = await response.json();
